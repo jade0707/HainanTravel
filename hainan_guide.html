@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>海南旅游攻略</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        .preference-section {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: relative;
+            border: 2px solid #d4af37;
+        }
+
+        .preference-section::before {
+            content: "🎯";
+            position: absolute;
+            left: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 24px;
+            opacity: 0.2;
+        }
+
+        .preference-section::after {
+            content: "⚓";
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 24px;
+            opacity: 0.2;
+        }
+
+        .preference-title {
+            color: #1e88e5;
+            margin-bottom: 15px;
+        }
+
+        .preference-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .preference-button {
+            padding: 10px 20px;
+            border: 2px solid #1e88e5;
+            border-radius: 5px;
+            background: white;
+            color: #1e88e5;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 16px;
+        }
+
+        .preference-button:hover,
+        .preference-button.active {
+            background: #1e88e5;
+            color: white;
+        }
+
+        .food-card {
+            display: none;
+        }
+
+        .food-card.show {
+            display: block;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            line-height: 1.6;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            padding: 40px 0;
+            background: linear-gradient(135deg, #00a0e9, #1e88e5);
+            color: white;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: "⚓";
+            position: absolute;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 40px;
+            opacity: 0.3;
+        }
+
+        .header::after {
+            content: "🎯";
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 40px;
+            opacity: 0.3;
+        }
+
+        .section {
+            margin-bottom: 40px;
+        }
+
+        .section-title {
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: #1e88e5;
+            border-left: 4px solid #1e88e5;
+            padding-left: 10px;
+        }
+
+        .card-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+            position: relative;
+            border: 2px solid #d4af37;
+        }
+
+        .card::before {
+            content: "🗺️";
+            position: absolute;
+            right: 10px;
+            top: 10px;
+            font-size: 20px;
+            opacity: 0.2;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card h3 {
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .card p {
+            color: #666;
+            font-size: 14px;
+        }
+
+        .tag {
+            display: inline-block;
+            padding: 4px 8px;
+            background-color: #e3f2fd;
+            color: #1e88e5;
+            border-radius: 4px;
+            font-size: 12px;
+            margin-right: 8px;
+            margin-top: 10px;
+        }
+
+        .action-buttons {
+            margin-top: 15px;
+            display: flex;
+            gap: 10px;
+        }
+
+        .action-button {
+            padding: 8px 12px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .collect-btn {
+            background-color: #fff;
+            color: #1e88e5;
+            border: 1px solid #1e88e5;
+        }
+
+        .share-btn {
+            background-color: #1e88e5;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>海南旅游攻略</h1>
+            <p>椰风海韵，热带天堂</p>
+        </div>
+
+        <div class="preference-section">
+            <h2 class="preference-title">选择您喜欢的口味</h2>
+            <div class="preference-buttons">
+                <button class="preference-button" data-preference="sour">酸味</button>
+                <button class="preference-button" data-preference="sweet">甜味</button>
+                <button class="preference-button" data-preference="bitter">苦味</button>
+                <button class="preference-button" data-preference="spicy">辣味</button>
+            </div>
+        </div>
+        <div class="section">
+            <h2 class="section-title">美食推荐</h2>
+            <div class="card-container">
+                <div class="card food-card" data-type="spicy bitter">
+                    <h3>海南四大名菜</h3>
+                    <p>文昌鸡、加积鸭、东山羊、和乐蟹，每一道都是海南特色美食的代表。</p>
+                    <span class="tag">特色菜</span>
+                    <span class="tag">必吃</span>
+                    <span class="tag">辣味</span>
+                    <span class="tag">苦味</span>
+                    <div class="action-buttons">
+                        <button class="action-button collect-btn">收藏</button>
+                        <button class="action-button share-btn">分享</button>
+                    </div>
+                </div>
+                <div class="card food-card" data-type="sweet sour">
+                    <h3>热带水果</h3>
+                    <p>椰子、芒果、菠萝蜜、莲雾等应季水果，新鲜多汁，风味独特。</p>
+                    <span class="tag">水果</span>
+                    <span class="tag">当季</span>
+                    <span class="tag">甜味</span>
+                    <span class="tag">酸味</span>
+                    <div class="action-buttons">
+                        <button class="action-button collect-btn">收藏</button>
+                        <button class="action-button share-btn">分享</button>
+                    </div>
+                </div>
+                <div class="card food-card" data-type="spicy sour">
+                    <h3>海鲜大餐</h3>
+                    <p>清蒸加勒比蓝龙虾、椒盐皮皮虾、香辣生蚝，海南海鲜让人流连忘返。</p>
+                    <span class="tag">海鲜</span>
+                    <span class="tag">美味</span>
+                    <span class="tag">辣味</span>
+                    <span class="tag">酸味</span>
+                    <div class="action-buttons">
+                        <button class="action-button collect-btn">收藏</button>
+                        <button class="action-button share-btn">分享</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2 class="section-title">景点推荐</h2>
+            <div class="card-container">
+                <div class="card">
+                    <h3>三亚亚龙湾</h3>
+                    <p>被誉为"天下第一湾"，水清沙白，是度假游玩的绝佳选择。</p>
+                    <span class="tag">海滩</span>
+                    <span class="tag">打卡地</span>
+                    <div class="action-buttons">
+                        <button class="action-button collect-btn">收藏</button>
+                        <button class="action-button share-btn">分享</button>
+                    </div>
+                </div>
+                <div class="card">
+                    <h3>南山文化旅游区</h3>
+                    <p>以佛教文化为主题的景区，108米海上观音像庄严肃穆。</p>
+                    <span class="tag">文化</span>
+                    <span class="tag">宗教</span>
+                    <div class="action-buttons">
+                        <button class="action-button collect-btn">收藏</button>
+                        <button class="action-button share-btn">分享</button>
+                    </div>
+                </div>
+                <div class="card">
+                    <h3>蜈支洲岛</h3>
+                    <p>被称为"东方马尔代夫"，是潜水、海钓等水上运动的天堂。</p>
+                    <span class="tag">海岛</span>
+                    <span class="tag">运动</span>
+                    <div class="action-buttons">
+                        <button class="action-button collect-btn">收藏</button>
+                        <button class="action-button share-btn">分享</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2 class="section-title">娱乐活动</h2>
+            <div class="card-container">
+                <div class="card">
+                    <h3>水上运动</h3>
+                    <p>冲浪、潜水、帆船、香蕉船等多种水上项目，让您尽情享受海上乐趣。</p>
+                    <span class="tag">刺激</span>
+                    <span class="tag">运动</span>
+                    <div class="action-buttons">
+                        <button class="action-button collect-btn">收藏</button>
+                        <button class="action-button share-btn">分享</button>
+                    </div>
+                </div>
+                <div class="card">
+                    <h3>第一市场</h3>
+                    <p>三亚最大的海鲜市场，可以自选海鲜让附近餐厅加工，体验本地特色。</p>
+                    <span class="tag">美食</span>
+                    <span class="tag">市场</span>
+                    <div class="action-buttons">
+                        <button class="action-button collect-btn">收藏</button>
+                        <button class="action-button share-btn">分享</button>
+                    </div>
+                </div>
+                <div class="card">
+                    <h3>夜市探索</h3>
+                    <p>第一市场、海口骑楼小吃街等夜市，感受海南独特的夜生活。</p>
+                    <span class="tag">夜市</span>
+                    <span class="tag">小吃</span>
+                    <div class="action-buttons">
+                        <button class="action-button collect-btn">收藏</button>
+                        <button class="action-button share-btn">分享</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2 class="section-title">实用贴士</h2>
+            <div class="card-container">
+                <div class="card">
+                    <h3>最佳旅游季节</h3>
+                    <p>11月至次年4月是最佳旅游季节，气候宜人，适合游玩。</p>
+                    <span class="tag">季节</span>
+                    <span class="tag">建议</span>
+                    <div class="action-buttons">
+                        <button class="action-button collect-btn">收藏</button>
+                        <button class="action-button share-btn">分享</button>
+                    </div>
+                </div>
+                <div class="card">
+                    <h3>交通建议</h3>
+                    <p>岛内可选择公交、出租车或租车，各景点间建议包车或参加一日游。</p>
+                    <span class="tag">交通</span>
+                    <span class="tag">出行</span>
+                    <div class="action-buttons">
+                        <button class="action-button collect-btn">收藏</button>
+                        <button class="action-button share-btn">分享</button>
+                    </div>
+                </div>
+                <div class="card">
+                    <h3>注意事项</h3>
+                    <p>防晒必备，雨季带伞，景点门票建议提前预订，海鲜价格要事先问清。</p>
+                    <span class="tag">提醒</span>
+                    <span class="tag">必看</span>
+                    <div class="action-buttons">
+                        <button class="action-button collect-btn">收藏</button>
+                        <button class="action-button share-btn">分享</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const preferenceButtons = document.querySelectorAll('.preference-button');
+            const foodCards = document.querySelectorAll('.food-card');
+
+            // 默认显示所有美食卡片
+            foodCards.forEach(card => card.classList.add('show'));
+
+            preferenceButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    // 移除其他按钮的active状态
+                    preferenceButtons.forEach(btn => btn.classList.remove('active'));
+                    // 添加当前按钮的active状态
+                    this.classList.add('active');
+
+                    const preference = this.dataset.preference;
+
+                    // 显示包含选中口味的美食卡片
+                    foodCards.forEach(card => {
+                        const cardTypes = card.dataset.type.split(' ');
+                        if (cardTypes.includes(preference)) {
+                            card.classList.add('show');
+                        } else {
+                            card.classList.remove('show');
+                        }
+                    });
+                });
+            });
+        });
+    </script>
+</body>
+</html>
