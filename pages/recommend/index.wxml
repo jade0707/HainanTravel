@@ -1,0 +1,92 @@
+<view class="container">
+  <view class="header">
+    <text class="title">智能推荐</text>
+    <text class="subtitle">填写您的需求，为您推荐最适合的行程</text>
+  </view>
+
+  <!-- 基础条件 -->
+  <view class="section">
+    <view class="section-title">基础条件</view>
+    
+    <view class="form-item">
+      <text class="label">预算范围</text>
+      <slider min="0" max="10000" step="100" value="{{budget}}" show-value bindchange="onBudgetChange" />
+    </view>
+
+    <view class="form-item">
+      <text class="label">出行时间</text>
+      <picker mode="selector" range="{{durationOptions}}" value="{{durationIndex}}" bindchange="onDurationChange">
+        <view class="picker-value">{{durationOptions[durationIndex]}}</view>
+      </picker>
+    </view>
+
+    <view class="form-item">
+      <text class="label">季节选择</text>
+      <picker mode="selector" range="{{seasonOptions}}" value="{{seasonIndex}}" bindchange="onSeasonChange">
+        <view class="picker-value">{{seasonOptions[seasonIndex]}}</view>
+      </picker>
+    </view>
+
+    <view class="form-item">
+      <text class="label">出行方式</text>
+      <radio-group bindchange="onTravelTypeChange">
+        <radio wx:for="{{travelTypes}}" wx:key="value" value="{{item.value}}">{{item.label}}</radio>
+      </radio-group>
+    </view>
+  </view>
+
+  <!-- 目的地特征 -->
+  <view class="section">
+    <view class="section-title">目的地特征</view>
+    
+    <view class="form-item">
+      <text class="label">气候条件</text>
+      <checkbox-group bindchange="onClimateChange">
+        <checkbox wx:for="{{climateOptions}}" wx:key="value" value="{{item.value}}">{{item.label}}</checkbox>
+      </checkbox-group>
+    </view>
+
+    <view class="form-item">
+      <text class="label">地理特征</text>
+      <checkbox-group bindchange="onGeographyChange">
+        <checkbox wx:for="{{geographyOptions}}" wx:key="value" value="{{item.value}}">{{item.label}}</checkbox>
+      </checkbox-group>
+    </view>
+
+    <view class="form-item">
+      <text class="label">文化特色</text>
+      <checkbox-group bindchange="onCultureChange">
+        <checkbox wx:for="{{cultureOptions}}" wx:key="value" value="{{item.value}}">{{item.label}}</checkbox>
+      </checkbox-group>
+    </view>
+  </view>
+
+  <!-- 特殊需求 -->
+  <view class="section">
+    <view class="section-title">特殊需求</view>
+    
+    <view class="form-item">
+      <text class="label">无障碍设施</text>
+      <switch checked="{{needAccessibility}}" bindchange="onAccessibilityChange" />
+    </view>
+
+    <view class="form-item">
+      <text class="label">饮食限制</text>
+      <checkbox-group bindchange="onDietaryChange">
+        <checkbox wx:for="{{dietaryOptions}}" wx:key="value" value="{{item.value}}">{{item.label}}</checkbox>
+      </checkbox-group>
+    </view>
+
+    <view class="form-item">
+      <text class="label">家庭友好</text>
+      <switch checked="{{familyFriendly}}" bindchange="onFamilyFriendlyChange" />
+    </view>
+
+    <view class="form-item">
+      <text class="label">宠物友好</text>
+      <switch checked="{{petFriendly}}" bindchange="onPetFriendlyChange" />
+    </view>
+  </view>
+
+  <button class="submit-btn" type="primary" bindtap="onSubmit">开始推荐</button>
+</view>

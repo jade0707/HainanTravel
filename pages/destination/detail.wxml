@@ -1,0 +1,74 @@
+<view class="container">
+  <!-- 轮播图 -->
+  <swiper class="banner" indicator-dots="true" autoplay="true" interval="3000" duration="500">
+    <swiper-item wx:for="{{destination.images}}" wx:key="*this">
+      <image src="{{item}}" mode="aspectFill" />
+    </swiper-item>
+  </swiper>
+
+  <!-- 景点信息 -->
+  <view class="info-section">
+    <view class="title-row">
+      <text class="title">{{destination.name}}</text>
+      <view class="price">¥{{destination.price}}起</view>
+    </view>
+    <view class="rating">
+      <text class="score">{{destination.rating}}</text>
+      <view class="stars">
+        <image wx:for="{{5}}" wx:key="*this" src="{{index < destination.rating ? '/assets/icons/star-active.png' : '/assets/icons/star.png'}}" />
+      </view>
+      <text class="review-count">({{destination.reviewCount}}条评价)</text>
+    </view>
+  </view>
+
+  <!-- 景点介绍 -->
+  <view class="section">
+    <view class="section-title">景点介绍</view>
+    <text class="description">{{destination.description}}</text>
+    <view class="features">
+      <view class="feature-item" wx:for="{{destination.features}}" wx:key="*this">
+        <image src="{{item.icon}}" />
+        <text>{{item.text}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 用户评价 -->
+  <view class="section">
+    <view class="section-header">
+      <text class="section-title">用户评价</text>
+      <text class="more" bindtap="onMoreReviews">查看全部></text>
+    </view>
+    <view class="review-list">
+      <view class="review-item" wx:for="{{reviews}}" wx:key="id">
+        <view class="reviewer">
+          <image class="avatar" src="{{item.avatar}}" />
+          <text class="name">{{item.username}}</text>
+          <view class="stars">
+            <image wx:for="{{5}}" wx:key="*this" src="{{index < item.rating ? '/assets/icons/star-active.png' : '/assets/icons/star.png'}}" />
+          </view>
+        </view>
+        <text class="review-content">{{item.content}}</text>
+        <view class="review-images" wx:if="{{item.images.length > 0}}">
+          <image wx:for="{{item.images}}" wx:key="*this" wx:for-item="img" src="{{img}}" mode="aspectFill" bindtap="previewImage" data-urls="{{item.images}}" data-current="{{img}}" />
+        </view>
+        <text class="review-time">{{item.time}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 底部预订栏 -->
+  <view class="booking-bar">
+    <view class="left-buttons">
+      <view class="icon-button" bindtap="onCollect">
+        <image src="{{isCollected ? '/assets/icons/collect-active.png' : '/assets/icons/collect.png'}}" />
+        <text>收藏</text>
+      </view>
+      <view class="icon-button" bindtap="onShare">
+        <image src="/assets/icons/share.png" />
+        <text>分享</text>
+      </view>
+    </view>
+    <button class="booking-button" bindtap="onBooking">立即预订</button>
+  </view>
+</view>

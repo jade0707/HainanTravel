@@ -1,0 +1,52 @@
+<view class="container">
+  <!-- 搜索栏 -->
+  <view class="search-bar">
+    <input type="text" placeholder="搜索目的地、景点" bindinput="onSearchInput" />
+    <icon type="search" size="20" bindtap="onSearch" />
+  </view>
+
+  <!-- 轮播图 -->
+  <swiper class="banner" indicator-dots="true" autoplay="true" interval="3000" duration="500">
+    <swiper-item wx:for="{{banners}}" wx:key="id">
+      <image src="{{item.imageUrl}}" mode="aspectFill" bindtap="onBannerTap" data-id="{{item.id}}" />
+    </swiper-item>
+  </swiper>
+
+  <!-- 热门目的地 -->
+  <view class="section">
+    <view class="section-header">
+      <text class="section-title">热门目的地</text>
+      <text class="more" bindtap="onMoreDestinations">更多></text>
+    </view>
+    <scroll-view scroll-x="true" class="scroll-container">
+      <view class="destination-card" wx:for="{{hotDestinations}}" wx:key="id" bindtap="onDestinationTap" data-id="{{item.id}}">
+        <image src="{{item.imageUrl}}" mode="aspectFill" />
+        <view class="destination-info">
+          <text class="destination-name">{{item.name}}</text>
+          <text class="destination-price">¥{{item.price}}起</text>
+        </view>
+      </view>
+    </scroll-view>
+  </view>
+
+  <!-- 特色行程 -->
+  <view class="section">
+    <view class="section-header">
+      <text class="section-title">特色行程</text>
+      <text class="more" bindtap="onMoreRoutes">更多></text>
+    </view>
+    <view class="route-list">
+      <view class="route-card" wx:for="{{specialRoutes}}" wx:key="id" bindtap="onRouteTap" data-id="{{item.id}}">
+        <image src="{{item.imageUrl}}" mode="aspectFill" />
+        <view class="route-info">
+          <text class="route-name">{{item.name}}</text>
+          <text class="route-desc">{{item.description}}</text>
+          <view class="route-meta">
+            <text class="route-duration">{{item.duration}}</text>
+            <text class="route-price">¥{{item.price}}起</text>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

@@ -1,0 +1,122 @@
+.container {
+  min-height: 100vh;
+  background: #f5f5f5;
+}
+
+/* 用户信息区域样式 */
+.user-info {
+  display: flex;
+  align-items: center;
+  padding: 40rpx 30rpx;
+  background: #1e88e5;
+}
+
+.avatar {
+  width: 120rpx;
+  height: 120rpx;
+  border-radius: 50%;
+  border: 4rpx solid rgba(255, 255, 255, 0.3);
+}
+
+.user-detail {
+  margin-left: 30rpx;
+}
+
+.nickname {
+  font-size: 32rpx;
+  color: #fff;
+  font-weight: bold;
+  display: block;
+  margin-bottom: 8rpx;
+}
+
+.user-id {
+  font-size: 24rpx;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.login-tip {
+  font-size: 32rpx;
+  color: #fff;
+}
+
+/* 用户数据概览样式 */
+.user-stats {
+  display: flex;
+  background: #fff;
+  padding: 30rpx 0;
+  margin-bottom: 20rpx;
+}
+
+.stat-item {
+  flex: 1;
+  text-align: center;
+  border-right: 1rpx solid #eee;
+}
+
+.stat-item:last-child {
+  border-right: none;
+}
+
+.stat-num {
+  font-size: 36rpx;
+  color: #333;
+  font-weight: bold;
+  display: block;
+  margin-bottom: 8rpx;
+}
+
+.stat-label {
+  font-size: 24rpx;
+  color: #999;
+}
+
+/* 功能列表样式 */
+.function-list {
+  margin-bottom: 40rpx;
+}
+
+.function-group {
+  background: #fff;
+  margin-bottom: 20rpx;
+}
+
+.function-item {
+  display: flex;
+  align-items: center;
+  padding: 30rpx;
+  border-bottom: 1rpx solid #f5f5f5;
+}
+
+.function-item:last-child {
+  border-bottom: none;
+}
+
+.function-icon {
+  width: 40rpx;
+  height: 40rpx;
+  margin-right: 20rpx;
+}
+
+.function-name {
+  flex: 1;
+  font-size: 28rpx;
+  color: #333;
+}
+
+.arrow {
+  width: 32rpx;
+  height: 32rpx;
+}
+
+/* 退出登录按钮样式 */
+.logout-button {
+  margin: 40rpx 30rpx;
+  height: 88rpx;
+  line-height: 88rpx;
+  text-align: center;
+  background: #fff;
+  border-radius: 44rpx;
+  font-size: 32rpx;
+  color: #f85959;
+}
